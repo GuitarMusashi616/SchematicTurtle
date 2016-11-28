@@ -80,7 +80,7 @@ function schemAPIs(run)
         SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/schemparser.lua",
         LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/locationfinder.lua",
         Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/refill.lua",
-        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua","
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua",
     }
 
 	for i,v in pairs(apis) do
