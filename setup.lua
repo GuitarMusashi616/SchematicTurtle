@@ -156,9 +156,9 @@ function Initiate()
 	--run new apis
 
 	--current location
-    heightPos = -1
-    widthPos = -1
-    lengthPos = -1
+    heightPos = 1
+    widthPos = 1
+    lengthPos = 1
     face = "south"
 	
 	--current objective
