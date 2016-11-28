@@ -1,33 +1,45 @@
+
+function hasItem()
+	local found=false
+	for i,v in ipairs(slot_lst) do
+		turtle.select(v)
+		if(turtle.getItemCount(v) > 0) then
+			found=true
+			--turtle.select(v)
+			--recordObjSlot(v)--
+			--slot = v
+			return found
+		end
+	end
+	return found
+end
+
 function findNextBlock(x,y,z)
-    blockID = getBlockId(x,y,z)
-    blockData = getData(x,y,z)
-    if blockID then
-        slot_lst = slots[blockID][blockData]
-        if(slot_lst ~= nil) then
-            if(#slot_lst > 0) then
-                local found=false
-                for i,v in ipairs(slot_lst) do
-					turtle.select(v)
-                    if(turtle.getItemCount(v) > 0) then
-						found=true
-							--turtle.select(v)
-							--recordObjSlot(v)--
-							--slot = v
-                        break
-                    end
-                end
-                if not found then
-                    print("Not enough " .. getBlockName(blockID, blockData) .. ". Please refill...")
-					while not found do
+	blockID = getBlockId(x,y,z)
+	blockData = getData(x,y,z)
+	if blockID then
+		slot_lst = slots[blockID][blockData]
+	        if(slot_lst ~= nil) then
+            		if(#slot_lst > 0) then
+				found = hasItem()
+				if not found then
+					print("Not enough " .. getBlockName(blockID, blockData) .. ". Please refill...")
+				end
+				while not found do
+					found = hasItem()
+					
+					if not found then
 						refill()
-						findNextBlock(x,y,z)
+					else
+						break
 					end
-                end
-				smartPlace(wrench)
+			
+                		end
+			smartPlace(wrench)
 			end
 			if turtle.getFuelLevel() < 200 then
-                refill()
-            end
+                		refill()
+            		end
 		end
 	end
 end
