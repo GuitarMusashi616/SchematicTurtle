@@ -105,6 +105,7 @@ end
 
 function copySetupVars()
         local h = fs.open("reference",'w')
+	h.writeLine("Branch = "..Branch)
         h.writeLine("slots = {}")
         h.writeLine("filename = ".."\""..tostring(filename).."\"")
         for i,v in pairs(slots) do
@@ -216,7 +217,7 @@ function Initiate()
         SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/schemparser.lua",
         LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/locationfinder.lua",
         Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/refill.lua",
-        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua","
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua",
     }
 	for i,v in pairs(apis) do
 		shell.run("SchematicBuilder/"..i)
