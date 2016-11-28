@@ -108,26 +108,26 @@ function checkInternal(x,y,z)
 end
 
 function check()
-    if x%2==0 then
-        evenx = true
-        if y%2==0 then
-            eveny = true
+    if x%2==1 then
+        oddx = true
+        if y%2==1 then
+            oddy = true
         else
-            eveny = false
+            oddy = false
         end
     else
-        evenx = false
-        if y%2==0 then
-            eveny = false
+        oddx = false
+        if y%2==1 then
+            oddy = false
         else
-            eveny = true
+            oddy = true
         end
     end
 end
 
 
 function Yiterate()
-    if evenx then
+    if oddx then
         if y < width then
             y = y + 1
         elseif y == width then
@@ -138,7 +138,7 @@ function Yiterate()
             end
         end
     else
-        if y == 0 then
+        if y == 1 then
             if x < height then
                 x = x + 1
 			elseif x == height then
@@ -154,16 +154,17 @@ end
 
 function iterate() 
     check()
-    if z == length and eveny then
-        Yiterate()
-    elseif z==length and (not eveny) then
-        z = z - 1
-    elseif z == 0 and eveny then
+    if z == length and oddy then
+        Yiterate()    
+    elseif z == 1 and oddy then
         z = z + 1
-    elseif z == 0 and (not eveny) then
+    elseif z == 1 and (not oddy) then
         Yiterate()
+    elseif z==length and (not oddy) then
+        z = z - 1
+
     elseif z < length then
-        if eveny then
+        if oddy then
             z = z + 1
         else
             z = z - 1
