@@ -1,15 +1,17 @@
 --redownload apis
 --run apis
 --initiate variables
+Branch = "Swarm"
+
 
 --temp ease of access
 local f = fs.open("update","w")
 f.write([[
 local tArgs = {...}
 if not tArgs[1] then
-	shell.run("pastebin run dS6WANii update")
+	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/setup.lua",{"update"})
 else
-	shell.run("pastebin run dS6WANii "..tArgs[1])
+	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/setup.lua",{"tArgs[1]"})
 end
 ]])
 f.close()
@@ -73,17 +75,17 @@ function schemAPIs(run)
 	end
 	
 	local apis = {
-		GoTo = "1uYUQiJq",
-		GPS = "5LXAvfzN",
-		SchemParser = "wJ9GPnCP",
-		LocationFinder = "ywxA9gpq",
-		Refill = "VtrrSeWh",
-		Debug = "7kNZpAi6"
-	}
+        GoTo = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/goto.lua",
+        GPS = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/gps.lua",
+        SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/schemparser.lua",
+        LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/locationfinder.lua",
+        Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/refill.lua",
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua",
+    }
 
 	for i,v in pairs(apis) do
 		if run ~= "run" then
-			shell.run("pastebin get "..v.." SchematicBuilder/"..i)
+			git.get(v,"SchematicBuilder/"..i)
 		end
 		shell.run("SchematicBuilder/"..i)
 	end
@@ -103,6 +105,7 @@ end
 
 function copySetupVars()
         local h = fs.open("reference",'w')
+	h.writeLine("Branch = "..Branch)
         h.writeLine("slots = {}")
         h.writeLine("filename = ".."\""..tostring(filename).."\"")
         for i,v in pairs(slots) do
@@ -209,12 +212,12 @@ function Initiate()
 	h.write([[
 	shell.run("reference")
 	local apis = {
-        GoTo = "1uYUQiJq",
-        GPS = "5LXAvfzN",
-        SchemParser = "wJ9GPnCP",
-        LocationFinder = "ywxA9gpq",
-        Refill = "VtrrSeWh",
-        Debug = "7kNZpAi6"
+        GoTo = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/goto.lua",
+        GPS = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/gps.lua",
+        SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/schemparser.lua",
+        LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/locationfinder.lua",
+        Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/refill.lua",
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua",
     }
 	for i,v in pairs(apis) do
 		shell.run("SchematicBuilder/"..i)
