@@ -1,7 +1,7 @@
 function checkIfAir()
 	--finds the location to place the next block
     while true do
-		iterate()
+		oldIterate()
 		--makes the turtle build faster by having to travel less
         blockID2 = getBlockId(x,y,z)	-- temporary variable 
         blockData2 = getData(x,y,z) 	-- temporary variable
@@ -70,11 +70,11 @@ function oldIterate()
     if z < length then
         z = z + 1
     elseif z == length then
-        z = 0
+        z = 1
         if y < width then
             y = y + 1
         elseif y == width then
-            y = 0
+            y = 1
             if x < height then
                 x = x + 1
             elseif x == height then
