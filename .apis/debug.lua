@@ -75,3 +75,40 @@ function checkIfRefill()
     end
     turtle.select(mem)
 end
+
+git = {}
+ 
+function createFile(filename,string)
+    local h = fs.open(filename,"w")
+    h.write(string)
+    h.close()
+end
+ 
+function git.get(address,filename)
+    write("Connecting to github.com... ")
+    local response = http.get(address)
+    if response then
+        print("")
+        print( "Downloaded as "..filename )
+    else
+        print("")
+        print("Failed.")
+    end
+    createFile(filename,response.readAll())
+end
+ 
+function git.run(address,...)
+    sCode = http.get(address).readAll()
+    if sCode then
+        local func, err = loadstring(sCode)
+        if not func then
+            printError( err )
+            return
+        end
+        setfenv(func, getfenv())
+        local success, msg = pcall(func, unpack(...))
+        if not success then
+            printError( msg )
+        end
+    end
+end
