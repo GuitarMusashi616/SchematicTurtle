@@ -105,7 +105,7 @@ end
 
 function copySetupVars()
         local h = fs.open("reference",'w')
-	h.writeLine("Branch = "..Branch)
+	h.writeLine("Branch = \""..Branch.."\"")
         h.writeLine("slots = {}")
         h.writeLine("filename = ".."\""..tostring(filename).."\"")
         for i,v in pairs(slots) do
