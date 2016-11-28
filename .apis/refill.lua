@@ -51,14 +51,14 @@ function ParseInv()
 end
  
 function refill()
+	local mem = turtle.getSelectedSlot()
 	local enderChest = checkIfEnderchest()
 	if enderChest then
-		local mem = turtle.getSelectedSlot()
-    	chester("set")
-        ParseInv()
-        chester("gather")
-		turtle.select(mem)
+    		chester("set")
+        	ParseInv()
+        	chester("gather")
 	end
+	turtle.select(mem)
 end
  
 function chester(action)
