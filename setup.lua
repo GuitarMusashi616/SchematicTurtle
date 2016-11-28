@@ -157,8 +157,8 @@ function Initiate()
 
 	--current location
     heightPos = -1
-    widthPos = 0
-    lengthPos = 0
+    widthPos = -1
+    lengthPos = -1
     face = "south"
 	
 	--current objective
