@@ -73,13 +73,13 @@ function schemAPIs(run)
 	end
 	
 	local apis = {
-		GoTo = "1uYUQiJq",
-		GPS = "5LXAvfzN",
-		SchemParser = "wJ9GPnCP",
-		LocationFinder = "ywxA9gpq",
-		Refill = "VtrrSeWh",
-		Debug = "7kNZpAi6"
-	}
+        GoTo = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/goto.lua",
+        GPS = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/gps.lua",
+        SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/schemparser.lua",
+        LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/locationfinder.lua",
+        Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/refill.lua",
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/debug.lua","
+    }
 
 	for i,v in pairs(apis) do
 		if run ~= "run" then
@@ -209,12 +209,12 @@ function Initiate()
 	h.write([[
 	shell.run("reference")
 	local apis = {
-        GoTo = "1uYUQiJq",
-        GPS = "5LXAvfzN",
-        SchemParser = "wJ9GPnCP",
-        LocationFinder = "ywxA9gpq",
-        Refill = "VtrrSeWh",
-        Debug = "7kNZpAi6"
+        GoTo = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/goto.lua",
+        GPS = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/gps.lua",
+        SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/schemparser.lua",
+        LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/locationfinder.lua",
+        Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/refill.lua",
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/.apis/debug.lua","
     }
 	for i,v in pairs(apis) do
 		shell.run("SchematicBuilder/"..i)
