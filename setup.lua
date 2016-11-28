@@ -7,9 +7,9 @@ local f = fs.open("update","w")
 f.write([[
 local tArgs = {...}
 if not tArgs[1] then
-	shell.run("pastebin run dS6WANii update")
+	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/setup.lua",{"update"})
 else
-	shell.run("pastebin run dS6WANii "..tArgs[1])
+	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/Swarm/setup.lua",{"tArgs[1]"})
 end
 ]])
 f.close()
@@ -83,7 +83,7 @@ function schemAPIs(run)
 
 	for i,v in pairs(apis) do
 		if run ~= "run" then
-			shell.run("pastebin get "..v.." SchematicBuilder/"..i)
+			git.get(v,i)
 		end
 		shell.run("SchematicBuilder/"..i)
 	end
