@@ -9,7 +9,7 @@ function findNextBlock(x,y,z)
                     for i,v in ipairs(slot_lst) do
 						turtle.select(v)
                         if(turtle.getItemCount(v) > 0) then
-                            found=true
+							found=true
 							--turtle.select(v)
 							--recordObjSlot(v)--
 							--slot = v
@@ -18,18 +18,19 @@ function findNextBlock(x,y,z)
                     end
                     if not found then
                         print("Not enough " .. getBlockName(blockID, blockData) .. ". Please refill...")
-						refill()
+						while not found do
+							refill()
+							findNextBlock(x,y,z)
+						end
                     end
-                    while turtle.getItemCount() == 0 do
-                    	refill()
-                    end
-                smartPlace(wrench)
-            end
-            if turtle.getFuelLevel() < 200 then
-                refill()
-            end
-        end
-    end
+					smartPlace(wrench)
+				end
+				if turtle.getFuelLevel() < 200 then
+                	refill()
+            	end
+			end
+		end
+	end
 end
 
 function setup()
