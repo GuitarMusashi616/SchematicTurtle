@@ -1,7 +1,7 @@
 --redownload apis
 --run apis
 --initiate variables
-Branch = "Swarm"
+Branch = "patch"
 
 
 --temp ease of access
@@ -199,9 +199,9 @@ function Initiate()
     copySetupVars()
 
 	if tArgs then
-    	recordPos(-1,0,0,"south")
+    	recordPos(1,1,1,"south")
     	recordObj(x,y,z)
-		recordObjSlot(1)
+	recordObjSlot(1)
 	else
     	shell.run("reference")
     	shell.run("position")
