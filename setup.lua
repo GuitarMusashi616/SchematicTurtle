@@ -235,7 +235,7 @@ function Initiate()
         shell.run("position")
         shell.run("objective")
 		shell.run("objectiveSlot")
-        goto(x,y,z)
+        goto(x+1,y,z)
         findNextBlock(x,y,z)
         checkIfAir()
     end
