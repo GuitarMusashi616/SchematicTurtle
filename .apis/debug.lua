@@ -25,7 +25,7 @@ handle.write([[
 		end
 		os.pullEvent("mouse_click")
 	end
-]]
+]])
 handle.close()
 
 
