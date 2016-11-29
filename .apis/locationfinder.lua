@@ -88,23 +88,86 @@ function oldIterate()
     recordObj(x,y,z)
 end
 
-function checkInternal(x,y,z)
-    if x%2==0 then
-        evenx = true
-        if y%2==0 then
-            eveny = true
+function checkPro(x,y,z)
+    if x%2==1 then
+        oddx = true
+        if y%2==1 then
+            oddy = true
         else
-            eveny = false
+            oddy = false
         end
     else
-        evenx = false
-        if y%2==0 then
-            eveny = false
+        oddx = false
+        if y%2==1 then
+            oddy = false
         else
-            eveny = true
+            oddy = true
         end
     end
-	return evenx,eveny
+    return oddx,oddy
+end
+
+
+function YiteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz)
+	
+	local height = finalx
+	local width = finaly
+	local length = finalz
+	
+	
+    if oddx then
+        if y < width then
+            y = y + 1
+        elseif y == width then
+            if x < height then
+                x = x + 1
+            elseif x == height then
+                x,y,z = "max","max","max"
+            end
+        end
+    else
+        if y <= starty then
+            if x < height then
+                x = x + 1
+			elseif x == height then
+				x = "max"
+				y = "max"
+				z = "max"
+            end
+        else
+            y=y-1
+        end
+    end
+    return x,y,z
+end
+
+
+function iteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz) 
+	
+	local height = finalx
+	local width = finaly
+	local length = finalz
+	
+    oddx,oddy = checkPro(x,y,z)
+    
+    
+    if z == length and oddy then
+        x,y,z = YiteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz)    
+    elseif z == startz and oddy then
+        z = z + 1
+    elseif z == startz and (not oddy) then
+        x,y,z = YiteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz)
+    elseif z==length and (not oddy) then
+        z = z - 1
+
+    elseif z < length then
+        if oddy then
+            z = z + 1
+        else
+            z = z - 1
+        end
+    end
+    return x,y,z
 end
 
 function check()
@@ -128,20 +191,20 @@ end
 
 function Yiterate()
     if oddx then
-        if y < width then
+        if y < width-1 then
             y = y + 1
-        elseif y == width then
-            if x < height then
+        elseif y == width-1 then
+            if x < height-1 then
                 x = x + 1
-            elseif x == height then
+            elseif x == height-1 then
                 x,y,z = "max","max","max"
             end
         end
     else
         if y <= 1 then
-            if x < height then
+            if x < height-1 then
                 x = x + 1
-			elseif x == height then
+			elseif x == height-1 then
 				x = "max"
 				y = "max"
 				z = "max"
@@ -154,16 +217,16 @@ end
 
 function iterate() 
     check()
-    if z == length and oddy then
+    if z == length-1 and oddy then
         Yiterate()    
     elseif z == 1 and oddy then
         z = z + 1
     elseif z == 1 and (not oddy) then
         Yiterate()
-    elseif z==length and (not oddy) then
+    elseif z==length-1 and (not oddy) then
         z = z - 1
 
-    elseif z < length then
+    elseif z < length-1 then
         if oddy then
             z = z + 1
         else
@@ -172,52 +235,7 @@ function iterate()
     end
 end
 
-function YiterateInternal(x,y,z,length,width,height)
-    if evenx then
-        if y < width then
-            y = y + 1
-        elseif y == width then
-            if x < height then
-                x = x + 1
-            elseif x == height then
-                x,y,z = "max","max","max"
-            end
-        end
-    else
-        if y == 0 then
-            if x < height then
-                x = x + 1
-			elseif x == height then
-				x = "max"
-				y = "max"
-				z = "max"
-            end
-        else
-            y=y-1
-        end
-    end
-	return x,y,z
-end
 
-function iterateInternal(x,y,z,length,width,height) 
-    evenx,eveny = check(x,y,z)
-    if z == length and eveny then
-        x,y,z = Yiterate(x,y,z,length,width,height)
-    elseif z==length and (not eveny) then
-        z = z - 1
-    elseif z == 0 and eveny then
-        z = z + 1
-    elseif z == 0 and (not eveny) then
-        x,y,z = Yiterate(x,y,z,length,width,height)
-    elseif z < length then
-        if eveny then
-            z = z + 1
-        else
-            z = z - 1
-        end
-    end
-	return x,y,z
-end
 
 function autorun()
     --get the current coords
