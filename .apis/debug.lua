@@ -41,9 +41,10 @@ end
 
 while true do
 	print(x," ",y," ",z)
-	iterate()
+	x,y,z = iteratePro(x,y,z,1,1,1,height,width,length)
 	os.pullEvent()
 end]])
+
 handle.close()
 
 function saveToConsole(str)
