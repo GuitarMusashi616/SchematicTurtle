@@ -163,7 +163,7 @@ function Initiate()
     face = "south"
 	
 	--current objective
-    x = 0
+    x = 1
     y = 1
     z = 1
 
