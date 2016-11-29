@@ -1,4 +1,4 @@
-function checkIfAir()
+function checkIfAir(x,y,z)
 	--finds the location to place the next block
     while true do
 	x,y,z = iteratePro(x,y,z,1,1,1,height-1,width-1,length-1)
