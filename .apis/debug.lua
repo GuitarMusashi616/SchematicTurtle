@@ -1,31 +1,29 @@
 local handle = fs.open("visualize","w")
 handle.write([[
 
-	if fs.exists("helpful/uWords") then
-		shell.run("helpful/uWords")
-	else
-		shell.run("pastebin run M4R2wazQ")
-	end
+if fs.exists("helpful/uWords") then
+	shell.run("helpful/uWords")
+else
+	shell.run("pastebin run M4R2wazQ")
+end
 
 
-	x,y,z = 0,0,0
-	--recordObj(1,1,1)
+x,y,z = 0,0,0
 
-	for x = 0,height do
-		shell.run("clr")
-		for y = 0,width do
-			for z = 0,length do
-				local res = getBlockId(x,y,z)
-				if res == 0 then
-					draw(" ",y,z,_,colors.white)
-				else
-					draw(res,y,z,_,colors.yellow)
-				end
+for x = 0,height do
+	shell.run("clr")
+	for y = 0,width do
+		for z = 0,length do
+			local res = getBlockId(x,y,z)
+			if res == 0 then
+				draw(" ",y,z,_,colors.white)
+			else
+				draw(res,y,z,_,colors.yellow)
 			end
 		end
-		os.pullEvent("mouse_click")
 	end
-]])
+	os.pullEvent("mouse_click")
+end]])
 handle.close()
 
 
