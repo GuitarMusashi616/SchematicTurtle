@@ -17,9 +17,9 @@ for x = 0,height do
 		for z = 0,length do
 			local res = getBlockId(x,y,z)
 			if res and res~=0 then
-				draw(" ",y,z,_,colors.yellow)
+				draw(" ",z,y,_,colors.yellow)
 			else
-				draw(" ",y,z,_,colors.white)
+				draw(" ",z,y,_,colors.white)
 			end
 		end
 	end
