@@ -18,7 +18,7 @@ for x = 0,height do
 			if res == 0 then
 				draw(" ",y,z,_,colors.white)
 			else
-				draw(res,y,z,_,colors.yellow)
+				draw(" ",y,z,_,colors.grey)
 			end
 		end
 	end
