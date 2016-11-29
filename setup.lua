@@ -7,7 +7,7 @@ Branch = "patch"
 --temp ease of access
 local f = fs.open("update","w")
 f.write([[
-shell.run("SchematicBuiler/Debug")
+shell.run("SchematicBuilder/Debug")
 local tArgs = {...}
 if not tArgs[1] then
 	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/]]..Branch..[[/setup.lua",{"update"})
