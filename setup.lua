@@ -157,15 +157,15 @@ function Initiate()
 	--run new apis
 
 	--current location
-    heightPos = 1
-    widthPos = 1
-    lengthPos = 1
+    heightPos = 0
+    widthPos = 0
+    lengthPos = 0
     face = "south"
 	
 	--current objective
-    x = 1
-    y = 1
-    z = 1
+    x = 0
+    y = 0
+    z = 0
 
 	--refill vars
     enderchest1 = 15
