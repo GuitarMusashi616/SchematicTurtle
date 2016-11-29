@@ -115,24 +115,6 @@ function YiteratePro(startx,starty,startz,finalx,finaly,finalz)
     return x,y,z
 end
 
-function check()
-    if x%2==1 then
-        oddx = true
-        if y%2==1 then
-            oddy = true
-        else
-            oddy = false
-        end
-    else
-        oddx = false
-        if y%2==1 then
-            oddy = false
-        else
-            oddy = true
-        end
-    end
-end
-
 function iteratePro(startx,starty,startz,finalx,finaly,finalz) 
 	
     check()
@@ -157,22 +139,46 @@ function iteratePro(startx,starty,startz,finalx,finaly,finalz)
 end
 
 
-function Yiterate()
+function check(startx,starty,startz)
+    if x%2==startx%2 then
+        oddx = true
+        if y%2==starty%2 then
+            oddy = true
+        else
+            oddy = false
+        end
+    else
+        oddx = false
+        if y%2==starty%2 then
+            oddy = false
+        else
+            oddy = true
+        end
+    end
+end
+
+
+function Yiterate(startx,starty,startz,finalx,finaly,finalz)
+	
+	local height = finalx
+	local width = finaly
+	local length = finalz
+	
     if oddx then
-        if y < width-1 then
+        if y < width then
             y = y + 1
-        elseif y == width-1 then
-            if x < height-1 then
+        elseif y == width then
+            if x < height then
                 x = x + 1
-            elseif x == height-1 then
+            elseif x == height then
                 x,y,z = "max","max","max"
             end
         end
     else
-        if y <= 1 then
-            if x < height-1 then
+        if y <= starty then
+            if x < height then
                 x = x + 1
-			elseif x == height-1 then
+			elseif x == height then
 				x = "max"
 				y = "max"
 				z = "max"
@@ -183,25 +189,31 @@ function Yiterate()
     end
 end
 
-function iterate() 
-    check()
-    if z == length-1 and oddy then
-        Yiterate()    
-    elseif z == 1 and oddy then
+function iterate(startx,starty,startz,finalx,finaly,finalz) 
+	
+	local height = finalx
+	local width = finaly
+	local length = finalz
+	
+	
+    check(startx,starty,startz)
+    if z == length and oddy then
+        Yiterate(startx,starty,startz,finalx,finaly,finalz)    
+    elseif z == startz and oddy then
         z = z + 1
-    elseif z == 1 and (not oddy) then
-        Yiterate()
-    elseif z==length-1 and (not oddy) then
+    elseif z == startz and (not oddy) then
+        Yiterate(startx,starty,startz,finalx,finaly,finalz)
+    elseif z==length and (not oddy) then
         z = z - 1
 
-    elseif z < length-1 then
+    elseif z < length then
         if oddy then
             z = z + 1
         else
             z = z - 1
         end
     end
-end
+ end
 
 
 
