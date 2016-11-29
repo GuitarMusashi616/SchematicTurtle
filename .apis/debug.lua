@@ -1,7 +1,7 @@
 function visualize()
 	local h = fs.open("visualize","w")
 	h.write([[
-	shell.run("pastebin run QAM3LnYJ")
+	--shell.run("pastebin run QAM3LnYJ")
 	--shell.run("helpful/uWords")
 
 	x,y,z = 0,0,0
