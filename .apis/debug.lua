@@ -1,4 +1,8 @@
-local handle = fs.open("visualize","w")
+if not fs.isDir("debug") then
+	fs.makeDir("debug")	
+end
+
+local handle = fs.open("debug/visualize","w")
 handle.write([[
 
 if fs.exists("helpful/uWords") then
@@ -27,6 +31,22 @@ for x = 0,height do
 end]])
 handle.close()
 
+local handle = fs.open("iterateTest","w")
+handle.write([[
+	
+x,y,z = 1,1,1
+if not height then
+	height,width,length = 8,18,1
+end
+
+while true do
+	print(x," ",y," ",z)
+	iterate()
+	os.pullEvent()
+end
+	
+]]
+handle.close()
 
 function saveToConsole(str)
 	local h = fs.open("console","a")
