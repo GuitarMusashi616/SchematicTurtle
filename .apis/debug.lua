@@ -1,5 +1,5 @@
 function visualize()
-	shell.run("pastebin run M4R2wazQ")
+	shell.run("pastebin run QAM3LnYJ")
 	--shell.run("helpful/uWords")
 
 	x,y,z = 0,0,0
