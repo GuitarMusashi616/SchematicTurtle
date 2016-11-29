@@ -1,4 +1,6 @@
 function visualize()
+	local h = fs.open("visualize","w")
+	h.write([[
 	shell.run("pastebin run QAM3LnYJ")
 	--shell.run("helpful/uWords")
 
@@ -45,6 +47,9 @@ function visualize()
 		end
 		os.pullEvent("mouse_click")
 	end
+	]])
+	h.close()
+	print("visualize program created")
 end
 
 function saveToConsole(str)
