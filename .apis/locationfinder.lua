@@ -1,7 +1,7 @@
 function checkIfAir()
 	--finds the location to place the next block
     while true do
-	oldIterate()
+	iterate()
 		--makes the turtle build faster by having to travel less
         blockID2 = getBlockId(x,y,z)	-- temporary variable 
         blockData2 = getData(x,y,z) 	-- temporary variable
