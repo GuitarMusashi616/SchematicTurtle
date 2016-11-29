@@ -1,7 +1,7 @@
-function checkIfAir(x,y,z)
+function checkIfAir()
 	--finds the location to place the next block
     while true do
-	x,y,z = iteratePro(x,y,z,1,1,1,height-1,width-1,length-1)
+	iteratePro(1,1,1,height-1,width-1,length-1)
 		--makes the turtle build faster by having to travel less
         blockID2 = getBlockId(x,y,z)	-- temporary variable 
         blockData2 = getData(x,y,z) 	-- temporary variable
@@ -88,83 +88,28 @@ function oldIterate()
     recordObj(x,y,z)
 end
 
-function checkPro(x,y,z)
-    if x%2==1 then
-        oddx = true
-        if y%2==1 then
-            oddy = true
-        else
-            oddy = false
-        end
-    else
-        oddx = false
-        if y%2==1 then
-            oddy = false
-        else
-            oddy = true
-        end
-    end
-    return oddx,oddy
-end
-
-
-function YiteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz)
-	
-	local height = finalx
-	local width = finaly
-	local length = finalz
-	
-	
+function YiteratePro(startx,starty,startz,finalx,finaly,finalz)
     if oddx then
-        if y < width then
+        if y < finaly then
             y = y + 1
-        elseif y == width then
-            if x < height then
+        elseif y == finaly then
+            if x < finalx then
                 x = x + 1
-            elseif x == height then
+            elseif x == finalx then
                 x,y,z = "max","max","max"
             end
         end
     else
         if y <= starty then
-            if x < height then
+            if x < finalx then
                 x = x + 1
-			elseif x == height then
+			elseif x == finalx then
 				x = "max"
 				y = "max"
 				z = "max"
             end
         else
             y=y-1
-        end
-    end
-    return x,y,z
-end
-
-
-function iteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz) 
-	
-	local height = finalx
-	local width = finaly
-	local length = finalz
-	
-    oddx,oddy = checkPro(x,y,z)
-    
-    
-    if z == length and oddy then
-        x,y,z = YiteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz)    
-    elseif z == startz and oddy then
-        z = z + 1
-    elseif z == startz and (not oddy) then
-        x,y,z = YiteratePro(x,y,z,startx,starty,startz,finalx,finaly,finalz)
-    elseif z==length and (not oddy) then
-        z = z - 1
-
-    elseif z < length then
-        if oddy then
-            z = z + 1
-        else
-            z = z - 1
         end
     end
     return x,y,z
@@ -184,6 +129,29 @@ function check()
             oddy = false
         else
             oddy = true
+        end
+    end
+end
+
+function iteratePro(startx,starty,startz,finalx,finaly,finalz) 
+	
+    check()
+    
+    
+    if z == finalz and oddy then
+        YiteratePro(startx,starty,startz,finalx,finaly,finalz)    
+    elseif z == startz and oddy then
+        z = z + 1
+    elseif z == startz and (not oddy) then
+        YiteratePro(startx,starty,startz,finalx,finaly,finalz)
+    elseif z==finalz and (not oddy) then
+        z = z - 1
+
+    elseif z < finalz then
+        if oddy then
+            z = z + 1
+        else
+            z = z - 1
         end
     end
 end
