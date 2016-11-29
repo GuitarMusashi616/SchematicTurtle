@@ -12,13 +12,14 @@ x,y,z = 0,0,0
 
 for x = 0,height do
 	shell.run("clr")
+	term.setBackgroundColor(colors.black)
 	for y = 0,width do
 		for z = 0,length do
 			local res = getBlockId(x,y,z)
-			if res == 0 then
-				draw(" ",y,z,_,colors.white)
+			if res and res~=0 then
+				draw(" ",y,z,_,colors.yellow)
 			else
-				draw(" ",y,z,_,colors.grey)
+				draw(" ",y,z,_,colors.white)
 			end
 		end
 	end
