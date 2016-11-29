@@ -41,7 +41,7 @@ end
 
 while true do
 	print(x," ",y," ",z)
-	x,y,z = iteratePro(x,y,z,1,1,1,height,width,length)
+	x,y,z = iteratePro(x,y,z,1,1,1,height-1,width-1,length-1)
 	os.pullEvent()
 end]])
 
