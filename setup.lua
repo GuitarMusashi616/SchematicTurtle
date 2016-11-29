@@ -237,7 +237,7 @@ function Initiate()
 		shell.run("objectiveSlot")
         goto(x+1,y,z)
         findNextBlock(x,y,z)
-        checkIfAir(x,y,z)
+        checkIfAir()
     end
 	shell.run("clr")
 	print("finished")
