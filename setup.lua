@@ -1,17 +1,18 @@
 --redownload apis
 --run apis
 --initiate variables
-Branch = "Swarm"
+Branch = "patch"
 
 
 --temp ease of access
 local f = fs.open("update","w")
 f.write([[
+shell.run("SchematicBuilder/Debug")
 local tArgs = {...}
 if not tArgs[1] then
 	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/]]..Branch..[[/setup.lua",{"update"})
 else
-	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/]]..Branch..[[/setup.lua",{"tArgs[1]"})
+	git.run("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/]]..Branch..[[/setup.lua",{tArgs[1]})
 end
 ]])
 f.close()
@@ -162,9 +163,9 @@ function Initiate()
     face = "south"
 	
 	--current objective
-    x = 0
-    y = 0
-    z = 0
+    x = 1
+    y = 1
+    z = 1
 
 	--refill vars
     enderchest1 = 15
@@ -199,9 +200,9 @@ function Initiate()
     copySetupVars()
 
 	if tArgs then
-    	recordPos(-1,0,0,"south")
+    	recordPos(1,1,1,"south")
     	recordObj(x,y,z)
-		recordObjSlot(1)
+	recordObjSlot(1)
 	else
     	shell.run("reference")
     	shell.run("position")
@@ -234,7 +235,7 @@ function Initiate()
         shell.run("position")
         shell.run("objective")
 		shell.run("objectiveSlot")
-        goto(x,y,z)
+        goto(x+1,y,z)
         findNextBlock(x,y,z)
         checkIfAir()
     end
