@@ -163,7 +163,7 @@ function Initiate()
     face = "south"
 	
 	--current objective
-    x = 1
+    x = 0
     y = 1
     z = 1
 
@@ -200,7 +200,7 @@ function Initiate()
     copySetupVars()
 
 	if tArgs then
-    	recordPos(1,1,1,"south")
+    	recordPos(0,1,1,"south")
     	recordObj(x,y,z)
 	recordObjSlot(1)
 	else
