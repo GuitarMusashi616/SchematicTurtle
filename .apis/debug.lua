@@ -31,7 +31,7 @@ for x = 0,height do
 end]])
 handle.close()
 
-local handle = fs.open("iterateTest","w")
+local handle = fs.open("debug/iterateTest","w")
 handle.write([[
 	
 x,y,z = 1,1,1
