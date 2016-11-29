@@ -45,7 +45,7 @@ while true do
 	os.pullEvent()
 end
 	
-]]
+]])
 handle.close()
 
 function saveToConsole(str)
