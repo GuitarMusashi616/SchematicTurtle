@@ -43,9 +43,7 @@ while true do
 	print(x," ",y," ",z)
 	iterate()
 	os.pullEvent()
-end
-	
-]])
+end]])
 handle.close()
 
 function saveToConsole(str)
