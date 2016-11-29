@@ -138,7 +138,7 @@ function Yiterate()
             end
         end
     else
-        if y == 1 then
+        if y <= 1 then
             if x < height then
                 x = x + 1
 			elseif x == height then
