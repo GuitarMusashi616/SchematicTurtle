@@ -11,8 +11,8 @@ end
 x,y,z = 0,0,0
 
 for x = 0,height do
-	shell.run("clr")
 	term.setBackgroundColor(colors.black)
+	shell.run("clr")
 	for y = 0,width do
 		for z = 0,length do
 			local res = getBlockId(x,y,z)
