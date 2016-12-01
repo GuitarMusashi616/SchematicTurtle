@@ -237,7 +237,7 @@ function Initiate()
 		shell.run("objectiveSlot")
        		--goto(x+1,y,z)
 		
-		goto2( goToCoords(x,y,z,startx,starty,startz,face) )
+		goto2( goToCoords(x,y,z,0,0,0,face) )
         	findNextBlock(x,y,z)
         	checkIfAir2()
     	end
