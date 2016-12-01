@@ -239,7 +239,7 @@ function Initiate()
 		
 		goto2( goToCoords(x,y,z,startx,starty,startz,face) )
         	findNextBlock(x,y,z)
-        	checkIfAir()
+        	checkIfAir2()
     	end
 	shell.run("clr")
 	print("finished")
