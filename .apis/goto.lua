@@ -210,12 +210,18 @@ function turn(dir)
 end
  
 function place()
+  while not turtle.place() do
+    turtle.dig()
+  end
+  return true
+end
+
+function placeOld
   while not turtle.placeDown() do
     turtle.digDown()
   end
   return true
 end
-
 function smartPlace(wrench)
 --wrench turning included
 --check for wrench 14
