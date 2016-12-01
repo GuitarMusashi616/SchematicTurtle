@@ -232,13 +232,13 @@ function Initiate()
 	end
 	resynchronize()
 	while true do
-        shell.run("position")
-        shell.run("objective")
+        	shell.run("position")
+        	shell.run("objective")
 		shell.run("objectiveSlot")
-        goto(x+1,y,z)
-        findNextBlock(x,y,z)
-        checkIfAir()
-    end
+       		goto(x+1,y,z)
+        	findNextBlock(x,y,z)
+        	checkIfAir()
+    	end
 	shell.run("clr")
 	print("finished")
 	]])
