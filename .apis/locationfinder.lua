@@ -210,6 +210,36 @@ function Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
     return x,y,z
 end
 
+function findDir(relDir,startDir)
+	--towards or away
+	local directions = {"north","east","south","west"}
+	for i = 1,#directions do
+		if directions[i] == startDir then
+			startDir = i
+		end
+	end
+	if relDir == "away" then
+		return directions[(startDir+2)%#directions]
+	elseif relDir == "towards" then
+		return directions[startDir]
+	end
+end
+
+
+function goToCoords(x,y,z,startx,starty,startz,startDir)
+	local face = startDir
+	if y%2 == starty%2 then
+		z = z + 1
+		face = findDir("away",startDir)
+	else 
+		z = z - 1
+		face = findDir("towards",startDir)
+	end
+	return x,y,z,face
+end
+
+
+
 function iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz) 
 	
 	local height = finalx
@@ -236,7 +266,6 @@ function iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
     end
     return x,y,z
  end
-
 
 
 function autorun()
