@@ -1,7 +1,7 @@
 --redownload apis
 --run apis
 --initiate variables
-Branch = "patch2"
+Branch = "swarm"
 
 
 --temp ease of access
@@ -21,7 +21,7 @@ f.close()
 
 --make sure gzip is equipped
 tArgs = {...}
-if #tArgs ~= 1 then
+if #tArgs < 1 then
     print("Usage: schemSetup <gunzipped schematic file>")
     return
 end
