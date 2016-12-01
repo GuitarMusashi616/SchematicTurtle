@@ -200,7 +200,7 @@ function Initiate()
     copySetupVars()
 
 	if tArgs then
-    	recordPos(0,1,1,"south")
+    	recordPos(0,0,0,"south")
     	recordObj(x,y,z)
 	recordObjSlot(1)
 	else
