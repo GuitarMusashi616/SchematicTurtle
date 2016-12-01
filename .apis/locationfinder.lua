@@ -58,30 +58,6 @@ function checkIfAirBUILTIN(x,y,z,height,width,length)
     end
 end
 
-
-
-function checkIfAir2(slots,height,width,length)
-	local ObjectivesList = {}
-	x,y,z = 0,0,0
-	while x do
-		local id = getBlockId(x,y,z)
-		local data = getData(x,y,z)
-		if slots[id] and #slots[id][data] > 0 then
-			table.insert(ObjectivesList,{
-				x = x,
-				y = y,
-				z = z,
-				id = id,
-				data = data,
-				slotNums = slots[id][data],
-			})
-		end
-		print(x,y,z)
-		x,y,z = iterate(x,y,z,height,width,length)
-	end
-	return ObjectivesList
-end
-
 --iterator api
 
 function oldIterate()
