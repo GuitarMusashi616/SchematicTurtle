@@ -45,25 +45,25 @@ function goto2(heightGoal,widthGoal,lengthGoal,dir)
         refill()
     end
 	if widthGoal > widthPos then
-        turn("east")
+        turn("west")
         while widthGoal > widthPos do
-            forward()
+            backward()
         end
     elseif widthGoal < widthPos then
-        turn("west")
+        turn("east")
         while widthGoal < widthPos do
-            forward()
+            backward()
         end
     end
     if lengthGoal > lengthPos then
-        turn("south")
+        turn("north")
         while lengthGoal > lengthPos do
-            forward()
+            backward()
         end
     elseif lengthGoal < lengthPos then
-        turn("north")
+        turn("south")
         while lengthGoal < lengthPos do
-            forward()
+            backward()
         end
     end
     if heightGoal > heightPos then
