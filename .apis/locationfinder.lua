@@ -18,6 +18,25 @@ function checkIfAir()
     end
 end
 
+function checkIfAir2()
+	--finds the location to place the next block
+    while true do
+	y,z,x = iterate(y,z,x,0,0,0,width-1,length-1,height-1)
+		--makes the turtle build faster by having to travel less
+        blockID2 = getBlockId(x,y,z)	-- temporary variable 
+        blockData2 = getData(x,y,z) 	-- temporary variable
+        if slots[blockID2] then
+			-- makes sure the next block to place at location is not air
+            slot_2nd = slots[blockID2][blockData2]
+            if slot_2nd then
+                if #slot_2nd > 0 then
+                    recordObj(x,y,z)
+                    break
+                end
+            end
+        end
+    end
+end
 
 function checkIfAirBUILTIN(x,y,z,height,width,length)
 	--finds the location to place the next block
