@@ -1,7 +1,7 @@
 --redownload apis
 --run apis
 --initiate variables
-Branch = "patch2"
+Branch = "verticalBuild"
 
 
 --temp ease of access
