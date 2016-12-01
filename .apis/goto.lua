@@ -135,7 +135,12 @@ function forward()
     turtle.dig()
   end
 end
- 
+
+function backward()
+	update("backward")
+	turtle.back()
+end
+
 function up()
   update("up")
   while not turtle.up() do
