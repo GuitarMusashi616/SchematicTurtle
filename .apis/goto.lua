@@ -38,6 +38,46 @@ function goto(heightGoal,widthGoal,lengthGoal)
     end
 end
  
+
+function goto2(heightGoal,widthGoal,lengthGoal,dir)
+    shell.run("position")
+    if turtle.getFuelLevel() < 200 then
+        refill()
+    end
+	if widthGoal > widthPos then
+        turn("east")
+        while widthGoal > widthPos do
+            forward()
+        end
+    elseif widthGoal < widthPos then
+        turn("west")
+        while widthGoal < widthPos do
+            forward()
+        end
+    end
+    if lengthGoal > lengthPos then
+        turn("south")
+        while lengthGoal > lengthPos do
+            forward()
+        end
+    elseif lengthGoal < lengthPos then
+        turn("north")
+        while lengthGoal < lengthPos do
+            forward()
+        end
+    end
+    if heightGoal > heightPos then
+        while heightGoal > heightPos do
+            up()
+        end
+    elseif heightGoal < heightPos then
+        while heightGoal < heightPos do
+            down()
+        end
+    end
+	turn(dir)
+end
+ 
 function update(dir)
         if dir == "forward" then
             if face == "north" then
