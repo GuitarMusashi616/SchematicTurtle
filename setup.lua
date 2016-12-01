@@ -22,7 +22,7 @@ f.close()
 --make sure gzip is equipped
 tArgs = {...}
 if #tArgs < 1 then
-    print("Usage: schemSetup <gunzipped schematic file>")
+    print("Usage: schemSetup <gunzipped schematic file> <startx> <starty> <startz> <finalx> <finaly> <finalz>")
     return
 end
 
@@ -125,6 +125,7 @@ function copySetupVars()
                         h.writeLine("invList\["..i.."\]\[".."\""..i2.."\"".."\] = "..tostring(v2))
                 end
         end
+	h.writeLine("startx,starty,startz,finalx,finaly,finalz = "..tArgs[2]..","..tArgs[3]..","..tArgs[4]..","..tArgs[5]..","..tArgs[6]..","..tArgs[7])
         h.writeLine("height = "..tostring(height))
         h.writeLine("width = "..tostring(width))
         h.writeLine("length = "..tostring(length))
