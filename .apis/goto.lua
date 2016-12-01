@@ -216,7 +216,7 @@ function place()
   return true
 end
 
-function placeOld
+function placeOld()
   while not turtle.placeDown() do
     turtle.digDown()
   end
