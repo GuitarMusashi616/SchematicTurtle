@@ -139,7 +139,7 @@ function iteratePro(startx,starty,startz,finalx,finaly,finalz)
 end
 
 
-function check(startx,starty,startz)
+function check(x,y,z,startx,starty,startz)
     if x%2==startx%2 then
         oddx = true
         if y%2==starty%2 then
@@ -155,10 +155,11 @@ function check(startx,starty,startz)
             oddy = true
         end
     end
+    return oddx, oddy
 end
 
 
-function Yiterate(startx,starty,startz,finalx,finaly,finalz)
+function Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
 	
 	local height = finalx
 	local width = finaly
@@ -187,22 +188,23 @@ function Yiterate(startx,starty,startz,finalx,finaly,finalz)
             y=y-1
         end
     end
+    return x,y,z
 end
 
-function iterate(startx,starty,startz,finalx,finaly,finalz) 
+function iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz) 
 	
 	local height = finalx
 	local width = finaly
 	local length = finalz
 	
 	
-    check(startx,starty,startz)
+    oddx,oddy = check(x,y,z,startx,starty,startz)
     if z == length and oddy then
-        Yiterate(startx,starty,startz,finalx,finaly,finalz)    
+        x,y,z = Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)    
     elseif z == startz and oddy then
         z = z + 1
     elseif z == startz and (not oddy) then
-        Yiterate(startx,starty,startz,finalx,finaly,finalz)
+        x,y,z = Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
     elseif z==length and (not oddy) then
         z = z - 1
 
@@ -213,6 +215,7 @@ function iterate(startx,starty,startz,finalx,finaly,finalz)
             z = z - 1
         end
     end
+    return x,y,z
  end
 
 
