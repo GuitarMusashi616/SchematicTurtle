@@ -54,7 +54,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 			
 			
 			--while true do
-				if type(z) == "string" then break end
+				if x == height and z==width and z==length then break end
 				local n = #instructions[i]+1
 				instructions[i][n]={}
 				instructions[i][n].x,instructions[1][n].y,instructions[1][n].z = x,y,z
