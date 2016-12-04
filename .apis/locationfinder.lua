@@ -53,7 +53,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 			x,y,z = startx,starty,startz
 			
 			
-			while true do
+			--while true do
 				if type(z) == "string" then break end
 				local n = #instructions[i]+1
 				instructions[i][n]={}
@@ -66,7 +66,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 					oTurtles[i].finalHeight, oTurtles[i].finalWidth, oTurtles[i].finalLength
 				)
 				--attach methods here
-			end
+			--end
 			
 			
 		end
