@@ -35,7 +35,7 @@ function findNextBlock(x,y,z)
 					end
 			
                 		end
-			smartPlace(wrench)
+			turtle.place()
 			end
 			if turtle.getFuelLevel() < 200 then
                 		refill()
