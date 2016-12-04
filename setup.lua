@@ -232,17 +232,19 @@ function Initiate()
 	    gpsi = false
 	end
 	resynchronize()
-	magnet.activate()
 	while true do
         	shell.run("position")
         	shell.run("objective")
 		shell.run("objectiveSlot")
 		goto(x+2,math.floor(width/2),math.floor(length/2))
+		magnet.activate()
 		magnet.setTarget(1,1,0)
 		findNextBlock(x,y,z)
 		magnet.toggleMagnet()
 		magnet.setTarget(z-math.floor(length/2),x+1,y-math.floor(width/2))
 		magnet.toggleMagnet()
+		magnet.setTarget(1,-1,1)
+		magnet.deactivate()
         --goto(x+1,y,z)
         
         checkIfAir()
