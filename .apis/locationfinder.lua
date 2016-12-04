@@ -21,12 +21,12 @@ end
 
 
 function createInstructions(startx,starty,startz,height,width,length,nTurtles,placeMode)
-	local x,y,z = startx,starty,startz
-	local instructions = {}
-	local nTurtles = nTurtles or 1
-	local startx,starty,startz = startx,starty,startz or 0,0,0
-	local placeMode = placeMode or "horizontal"
-	local oTurtles = {}
+	 x,y,z = startx,starty,startz
+	 instructions = {}
+	 nTurtles = nTurtles or 1
+	 startx,starty,startz = startx,starty,startz or 0,0,0
+	 placeMode = placeMode or "horizontal"
+	 oTurtles = {}
 	
 	
 	for i = 1,nTurtles do
