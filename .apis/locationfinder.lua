@@ -36,7 +36,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 		if i == 1 then
 			oTurtles[i].startWidth = starty
 		else
-			turtle[i].startWidth = turtle[i-1].startWidth + turtle[i].responsibleLength
+			oTurtles[i].startWidth = oTurtles[i-1].startWidth + oTurtles[i].responsibleLength
 		end
 		oTurtles[i].startLength = startz
 		oTurtles[i].finalHeight = height-1
