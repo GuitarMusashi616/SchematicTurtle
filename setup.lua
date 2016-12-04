@@ -211,6 +211,7 @@ function Initiate()
 	local h = fs.open("startup","w")
 	h.write([[
 	shell.run("reference")
+	shell.run("instructions")
 	local apis = {
         GoTo = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/goto.lua",
         GPS = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/gps.lua",
@@ -231,13 +232,12 @@ function Initiate()
 	end
 	resynchronize()
 	while true do
-        shell.run("position")
-        shell.run("objective")
-		shell.run("objectiveSlot")
-        goto(x+1,y,z)
-        findNextBlock(x,y,z)
-        checkIfAir()
-    end
+        	shell.run("position")
+        	shell.run("objective")
+        	goto(x+1,y,z)
+        	findNextBlock(x,y,z)
+       		checkIfAir()
+    	end
 	shell.run("clr")
 	print("finished")
 	]])
