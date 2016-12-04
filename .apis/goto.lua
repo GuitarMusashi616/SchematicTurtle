@@ -221,8 +221,8 @@ function recordObj(x,y,z)
     h.close()
 end
 
-function recordObjSlot(num)
-	local h = fs.open("objectiveSlot",'w')
-	h.writeLine("slot = "..tostring(num))
-    h.close()
+function recordInstructions(oIns)
+	local h = fs.open("Instructions",'w')
+	h.write(textutils.serialize(oIns)
+    	h.close()
 end
