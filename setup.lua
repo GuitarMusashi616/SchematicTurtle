@@ -200,13 +200,12 @@ function Initiate()
     copySetupVars()
 
 	if tArgs then
-    	recordPos(0,1,1,"south")
-    	recordObj(x,y,z)
-	recordObjSlot(1)
+    		recordPos(0,1,1,"south")
+    		recordObj(x,y,z)
 	else
-    	shell.run("reference")
-    	shell.run("position")
-    	shell.run("objective")
+    		shell.run("reference")
+    		shell.run("position")
+    		shell.run("objective")
 	end
  
 	local h = fs.open("startup","w")
