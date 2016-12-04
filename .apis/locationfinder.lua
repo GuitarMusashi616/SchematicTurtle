@@ -29,6 +29,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 	
 	for i = 1,nTurtles do
 		local oTurtles = {}
+		oTurtles[i] = {}
 		oTurtles[i].responsibleLength =  math.floor(x/nTurtles)
 		oTurtles[tonumber(nTurtles)].responsibleLength = math.floor(x/nTurtles) + (x - (math.floor(x/nTurtles)*nTurtles))
 		oTurtles[i].startHeight = startx
