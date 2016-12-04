@@ -53,8 +53,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 			x,y,z = startx,starty,startz
 			
 			
-			while true do
-				if x == height and z==width and z==length then break end
+			repeat
 				local n = #instructions[i]+1
 				instructions[i][n]={}
 				instructions[i][n].x,instructions[1][n].y,instructions[1][n].z = x,y,z
@@ -66,7 +65,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 					oTurtles[i].finalHeight, oTurtles[i].finalWidth, oTurtles[i].finalLength
 				)
 				--attach methods here
-			end
+			until x == oTurtles[i].finalHeight
 			
 			
 		end
