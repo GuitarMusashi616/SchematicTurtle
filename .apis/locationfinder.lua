@@ -1,7 +1,7 @@
 function checkIfAir()
 	--finds the location to place the next block
     while true do
-	iterate(0,0,0,height-1,width-1,length-1)
+	x,y,z = iterate(0,0,0,height-1,width-1,length-1)
 		--makes the turtle build faster by having to travel less
         blockID2 = getBlockId(x,y,z)	-- temporary variable 
         blockData2 = getData(x,y,z) 	-- temporary variable
@@ -15,27 +15,6 @@ function checkIfAir()
                 end
             end
         end
-    end
-end
-
-
-function checkIfAirBUILTIN(x,y,z,height,width,length)
-	--finds the location to place the next block
-    while true do
-		--makes the turtle build faster by having to travel less
-        blockID2 = getBlockId(x,y,z)	-- temporary variable 
-        blockData2 = getData(x,y,z) 	-- temporary variable
-        if slots[blockID2] then
-			-- makes sure the next block to place at location is not air
-            slot_2nd = slots[blockID2][blockData2]
-            if slot_2nd then
-                if #slot_2nd > 0 then
-                    recordObj(x,y,z)
-                    break
-                end
-            end
-        end
-		x,y,z = iterate(x,y,z,height,width,length)
     end
 end
 
@@ -88,58 +67,8 @@ function oldIterate()
     recordObj(x,y,z)
 end
 
-function YiteratePro(startx,starty,startz,finalx,finaly,finalz)
-    if oddx then
-        if y < finaly then
-            y = y + 1
-        elseif y == finaly then
-            if x < finalx then
-                x = x + 1
-            elseif x == finalx then
-                x,y,z = "max","max","max"
-            end
-        end
-    else
-        if y <= starty then
-            if x < finalx then
-                x = x + 1
-			elseif x == finalx then
-				x = "max"
-				y = "max"
-				z = "max"
-            end
-        else
-            y=y-1
-        end
-    end
-    return x,y,z
-end
 
-function iteratePro(startx,starty,startz,finalx,finaly,finalz) 
-	
-    check()
-    
-    
-    if z == finalz and oddy then
-        YiteratePro(startx,starty,startz,finalx,finaly,finalz)    
-    elseif z == startz and oddy then
-        z = z + 1
-    elseif z == startz and (not oddy) then
-        YiteratePro(startx,starty,startz,finalx,finaly,finalz)
-    elseif z==finalz and (not oddy) then
-        z = z - 1
-
-    elseif z < finalz then
-        if oddy then
-            z = z + 1
-        else
-            z = z - 1
-        end
-    end
-end
-
-
-function check(startx,starty,startz)
+function check(x,y,z,startx,starty,startz)
     if x%2==startx%2 then
         oddx = true
         if y%2==starty%2 then
@@ -155,10 +84,11 @@ function check(startx,starty,startz)
             oddy = true
         end
     end
+	return oddx,oddy
 end
 
 
-function Yiterate(startx,starty,startz,finalx,finaly,finalz)
+function Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
 	
 	local height = finalx
 	local width = finaly
@@ -187,22 +117,23 @@ function Yiterate(startx,starty,startz,finalx,finaly,finalz)
             y=y-1
         end
     end
+	return x,y,z
 end
 
-function iterate(startx,starty,startz,finalx,finaly,finalz) 
+function iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz) 
 	
 	local height = finalx
 	local width = finaly
 	local length = finalz
 	
 	
-    check(startx,starty,startz)
+    local oddx,oddy = check(x,y,z,startx,starty,startz)
     if z == length and oddy then
-        Yiterate(startx,starty,startz,finalx,finaly,finalz)    
+        x,y,z = Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)    
     elseif z == startz and oddy then
         z = z + 1
     elseif z == startz and (not oddy) then
-        Yiterate(startx,starty,startz,finalx,finaly,finalz)
+        x,y,z = Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
     elseif z==length and (not oddy) then
         z = z - 1
 
@@ -213,20 +144,7 @@ function iterate(startx,starty,startz,finalx,finaly,finalz)
             z = z - 1
         end
     end
+	return x,y,z
  end
 
 
-
-function autorun()
-    --get the current coords
-    --get the iterater/goal block location
-    while true do
-        shell.run("position")
-        shell.run("objective")
-        goto(x,y,z)
-        findNextBlock(x,y,z)
-        checkIfAir()
-    end
-	shell.run("clr")
-	print("finished")
-end
