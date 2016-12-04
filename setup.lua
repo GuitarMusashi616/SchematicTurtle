@@ -241,9 +241,8 @@ function Initiate()
 		magnet.setTarget(1,1,0)
 		findNextBlock(x,y,z)
 		magnet.toggleMagnet()
-		magnet.setTarget(z,x+1,y)
+		magnet.setTarget(z-math.floor(length/2),x+1,y-math.floor(width/2))
 		magnet.toggleMagnet()
-		
         --goto(x+1,y,z)
         
         checkIfAir()
