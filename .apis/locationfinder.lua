@@ -131,18 +131,18 @@ function Yiterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
         elseif y == width then
             if x < height then
                 x = x + 1
-            elseif x == height then
-                x,y,z = "max","max","max"
+            --elseif x == height then
+                --x,y,z = "max","max","max"
             end
         end
     else
         if y <= starty then
             if x < height then
                 x = x + 1
-			elseif x == height then
-				x = "max"
-				y = "max"
-				z = "max"
+			--elseif x == height then
+				--x = "max"
+				--y = "max"
+				--z = "max"
             end
         else
             y=y-1
