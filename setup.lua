@@ -1,7 +1,7 @@
 --redownload apis
 --run apis
 --initiate variables
-Branch = "patch2"
+Branch = "magnet"
 
 
 --temp ease of access
@@ -125,6 +125,7 @@ function copySetupVars()
                         h.writeLine("invList\["..i.."\]\[".."\""..i2.."\"".."\] = "..tostring(v2))
                 end
         end
+	h.writeLine("magnet = peripheral.find(\"openblocks_magnet\")")
         h.writeLine("height = "..tostring(height))
         h.writeLine("width = "..tostring(width))
         h.writeLine("length = "..tostring(length))
