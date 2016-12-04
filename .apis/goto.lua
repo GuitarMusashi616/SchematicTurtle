@@ -223,6 +223,6 @@ end
 
 function recordInstructions(oIns)
 	local h = fs.open("Instructions",'w')
-	h.write(textutils.serialize(oIns)
+	h.write(textutils.serialize(oIns))
     	h.close()
 end
