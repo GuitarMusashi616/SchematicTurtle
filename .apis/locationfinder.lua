@@ -1,7 +1,7 @@
 function checkIfAir()
 	--finds the location to place the next block
     while true do
-	x,y,z = iterate(0,0,0,height-1,width-1,length-1)
+	x,y,z = iterate(x,y,z,startx,starty,startz,height-1,width-1,length-1)
 		--makes the turtle build faster by having to travel less
         blockID2 = getBlockId(x,y,z)	-- temporary variable 
         blockData2 = getData(x,y,z) 	-- temporary variable
@@ -20,26 +20,54 @@ end
 
 
 
-function checkIfAir2(slots,height,width,length)
-	local ObjectivesList = {}
-	x,y,z = 0,0,0
-	while x do
-		local id = getBlockId(x,y,z)
-		local data = getData(x,y,z)
-		if slots[id] and #slots[id][data] > 0 then
-			table.insert(ObjectivesList,{
-				x = x,
-				y = y,
-				z = z,
-				id = id,
-				data = data,
-				slotNums = slots[id][data],
-			})
+function createInstructions(startx,starty,startz,height,width,length,nTurtles,placeMode)
+	local x,y,z = startx,starty,startz
+	local instructions = {}
+	local nTurtles = nTurtles or 1
+	local startx,starty,startz = startx,starty,startz or 0,0,0
+	local placeMode = placeMode or "horizontal"
+	
+	for i = 1,nTurtles do
+		local oTurtles = {}
+		oTurtles[i].responsibleLength =  math.floor(x/nTurtles)
+		oTurtles[tonumber(nTurtles)].responsibleLength = math.floor(x/nTurtles) + (x - (math.floor(x/nTurtles)*nTurtles))
+		oTurtles[i].startHeight = startx
+		if i == 1 then
+			oTurtles[i].startWidth = starty
+		else
+			turtle[i].startWidth = turtle[i-1].startWidth + turtle[i].responsibleLength
 		end
-		print(x,y,z)
-		x,y,z = iterate(x,y,z,height,width,length)
+		oTurtles[i].startLength = startz
+		oTurtles[i].finalHeight = height-1
+		oTurtles[i].finalWidth = oTurtles[i].startWidth + oTurtles[i].responsibleLength - 1
+		oTurtles[i].finalLength = length-1
+		instructions[i] = {}
+		
 	end
-	return ObjectivesList
+	
+	
+
+		for i = 1,nTurtles do
+			x,y,z = startx,starty,startz
+			
+			
+			while type(z) == "number" do
+				local n = #instructions[i]+1
+				instructions[i][n]={}
+				instructions[i][n].x,instructions[1][n].y,instructions[1][n].z = x,y,z
+				instructions[i][n].placeMode = placeMode
+				instructions[i][n].id = getBlockId(x,y,z)
+				instructions[i][n].data = getData(x,y,z)
+				x,y,z = iterate(x,y,z,
+					oTurtles[i].startHeight, oTurtles[i].startWidth, oTurtles[i].startLength,
+					oTurtles[i].finalHeight, oTurtles[i].finalWidth, oTurtles[i].finalLength
+				)
+				--attach methods here
+			end
+			
+			
+		end
+	return instructions
 end
 
 --iterator api
