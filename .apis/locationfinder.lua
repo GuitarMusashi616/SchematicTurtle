@@ -24,7 +24,7 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 	 x,y,z = startx,starty,startz
 	 instructions = {}
 	 nTurtles = nTurtles or 1
-	 startx,starty,startz = startx,starty,startz or 0,0,0
+	 --startx,starty,startz = startx,starty,startz or 0,0,0
 	 placeMode = placeMode or "horizontal"
 	 oTurtles = {}
 	
