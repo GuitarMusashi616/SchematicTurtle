@@ -219,6 +219,95 @@ function Initiate()
         LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/locationfinder.lua",
         Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/refill.lua",
         Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua",
+    	}
+	for i,v in pairs(apis) do
+		shell.run("SchematicBuilder/"..i)
+	end
+	openRednet()
+	checkIfRefill()
+	if gps.locate() then
+	    gpsi = true
+	else
+	    gpsi = false
+	end
+	resynchronize()
+	]])
+	h.close()
+	
+end
+		
+function regularInitiate()
+	if tArgs[1] == "update" then
+		schemAPIs("update")
+		error()
+	end
+	deleteOldFiles()
+    schemAPIs()
+	--run new apis
+
+	--current location
+    heightPos = 0
+    widthPos = 0
+    lengthPos = 0
+    face = "south"
+	
+	--current objective
+    x = 0
+    y = 0
+    z = 0
+
+	--refill vars
+    enderchest1 = 15
+    enderchest2 = 16
+    chestOrder = 1
+
+	--schematic vars
+    blocks = {}
+    data = {}
+
+	--initialize if available
+    openRednet()
+    gpsSetup()
+	wrench = checkWrench()
+	isAdvanced = checkTurtleType()	
+
+	--make sure schematic is good to go
+    filename = tArgs[1]
+ 
+    if not fs.exists(filename) then
+          print("File does not exist.")
+          return
+    end
+ 
+    handle = fs.open(filename, "rb")
+	
+	--corresponding item slots
+	shell.run("clr")
+    setup()
+
+	--copy down entire environment
+    copySetupVars()
+
+	if tArgs then
+    		recordPos(0,1,1,"south")
+    		recordObj(x,y,z)
+	else
+    		shell.run("reference")
+    		shell.run("position")
+    		shell.run("objective")
+	end
+ 
+	local h = fs.open("startup","w")
+	h.write([[
+	shell.run("reference")
+	shell.run("instructions")
+	local apis = {
+        GoTo = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/goto.lua",
+        GPS = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/gps.lua",
+        SchemParser = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/schemparser.lua",
+        LocationFinder = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/locationfinder.lua",
+        Refill = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/refill.lua",
+        Debug = "https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/"..Branch.."/.apis/debug.lua",
     }
 	for i,v in pairs(apis) do
 		shell.run("SchematicBuilder/"..i)
