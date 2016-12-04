@@ -53,7 +53,8 @@ function createInstructions(startx,starty,startz,height,width,length,nTurtles,pl
 			x,y,z = startx,starty,startz
 			
 			
-			while type(z) == "number" do
+			while true do
+				if type(z) == "string" then break end
 				local n = #instructions[i]+1
 				instructions[i][n]={}
 				instructions[i][n].x,instructions[1][n].y,instructions[1][n].z = x,y,z
