@@ -5,6 +5,9 @@ function checkIfAir()
 		--makes the turtle build faster by having to travel less
         blockID2 = getBlockId(x,y,z)	-- temporary variable 
         blockData2 = getData(x,y,z) 	-- temporary variable
+	if blockID2 == "finished" then
+		break
+	end
         if slots[blockID2] then
 			-- makes sure the next block to place at location is not air
             slot_2nd = slots[blockID2][blockData2]
