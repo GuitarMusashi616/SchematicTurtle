@@ -213,11 +213,21 @@ function getBlockName(id, blockData)
 end
  
 function getBlockId(x,y,z)
-  return blocks[y + z*width + x*length*width + 1]
+	local blockid = blocks[y + z*width + x*length*width + 1]
+	if blockid then
+  		return blockid
+	else
+		return "finished"
+	end
 end
  
 function getData(x,y,z)
-  return data[y + z*width + x*length*width + 1]
+	local blockdata = data[y + z*width + x*length*width + 1]
+	if blockdata then
+  		return blockdata
+	else
+		return "finished"
+	end
 end
  
 function readbytes(handle, n)
