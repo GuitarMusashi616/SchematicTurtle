@@ -61,7 +61,7 @@ function setup()
         found = false
         for j,w in ipairs(uniqueblocks) do
             -- for now, data is only accounted for when the block is wool
-                if (w.blockID==v and (w.data==data[i] or w.blockID ~= 35)) then
+                if w.blockID==v and w.data==data[i] then
                     found = true
                     w.amount = w.amount + 1
                     break
