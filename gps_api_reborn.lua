@@ -1,17 +1,22 @@
 local tArgs = {...}
 
+function delay()
+	sleep(.4)
+	return true
+end
+
 function recordStep(n)
     local h = fs.open("nObjective",'w')
-    h.writeLine("nObjective = "..tostring(n)..";")
+    h.writeLine("nObjective = "..tostring(n))
     h.close()
 end
 
 function recordPos(heightPos,widthPos,lengthPos,face)
     local h = fs.open("position","w")
-    h.writeLine("heightPos = "..tostring(heightPos)..";")
-    h.writeLine("widthPos = "..tostring(widthPos)..";")
-    h.writeLine("lengthPos = "..tostring(lengthPos)..";")
-    h.writeLine("face = ".."\""..tostring(face).."\""..";")
+    h.writeLine("heightPos = "..tostring(heightPos))
+    h.writeLine("widthPos = "..tostring(widthPos))
+    h.writeLine("lengthPos = "..tostring(lengthPos))
+    h.writeLine("face = ".."\""..tostring(face).."\"")
     h.close()
 end
 
@@ -155,34 +160,23 @@ end
 --[[Movement functions]]--
  
 function forward()
-  update("forward")
-  while not turtle.forward() do
-    turtle.dig()
-  end
+  parallel.waitForAll(delay,function() while not turtle.forward() do turtle.dig() end return true end,function() update("forward") end)
 end
  
 function up()
-  update("up")
-  while not turtle.up() do
-    turtle.digUp()
-  end
+  parallel.waitForAll(delay,function() while not turtle.up() do turtle.digUp() end return true end,function() update("up") end)
 end
  
 function down()
-  update("down")
-  while not turtle.down() do
-    turtle.digDown()
-  end
+  parallel.waitForAll(delay,function() while not turtle.down() do turtle.digDown() end return true end,function() update("down") end)
 end
  
 function right()
-  update("right")
-  turtle.turnRight()
+  parallel.waitForAll(delay,turtle.turnRight,function() update("right") end)
 end
    
 function left()
-  update("left")
-  turtle.turnLeft()
+  parallel.waitForAll(delay,turtle.turnLeft,function() update("left") end)
 end
  
 function turn(dir)
@@ -376,7 +370,7 @@ function findAndPlace(id,data,slots,wrench)
     local block = turtle.getItemDetail()
     if block then
         --lookup stairs or slabs
-        if (block.name:lower():find("stairs") or block.name:lower():find("slab") or block.name:lower():find("chest")) and wrench and id~=324 and id~=96 then
+        if (block.name:lower():find("stairs") or block.name:lower():find("slab") or block.name:lower():find("chest")) and wrench then
             --place until metadata matches
             place()
             while true do
