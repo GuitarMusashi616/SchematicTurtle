@@ -1,5 +1,5 @@
 --no pastebin? no problem!
---fs.open("setup","w").write(http.post("http://pastebin.com/raw/8Th5VpE5").readAll())
+--fs.open("setup","w").write(http.post("https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/framework2/setup.lua").readAll())
 
 local tArgs = {...}
 --local filename
