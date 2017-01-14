@@ -12,7 +12,7 @@ end
 local filename = tArgs[1]
 
 if not fs.exists(filename) then
-  error("File does not exist.")
+  --error("File does not exist.")
 end
 
 function save(name,table)
@@ -369,6 +369,20 @@ function place()
   end
 end
 
+local function show_selected_slot(n)
+	local w,h = term.getCursorPos()
+	local itemData = turtle.getItemDetail(newSelect)
+	if itemData then
+		term.clearLine()
+		term.setCursorPos(1,h)
+		write("    "..itemData.name..", "..itemData.damage)
+	else
+		term.clearLine()
+		term.setCursorPos(1,h)
+		write("    ")
+	end
+	return itemData
+end
 
 function setup(filename)
 --input file
@@ -447,7 +461,7 @@ function setup(filename)
     		slots[block.blockID] = {}
   		end
   		slots[block.blockID][blockData] = {}
-
+		show_selected_slot(turtle.getSelectedSlot())
 		--input none
 		--output(n)		
 
@@ -460,13 +474,14 @@ function setup(filename)
 			n = numberSelector()
 		end
 
-		if(n) then
-			local itemData = turtle.getItemDetail(n)
-			if itemData then
-				print("    "..itemData.name..", "..itemData.damage)
-				slots[block.blockID][blockData] = {itemData.name,itemData.damage}
-			end
-   		else
+		local itemData = show_selected_slot(n)
+		if(n and itemData) then
+			print()
+			slots[block.blockID][blockData] = {itemData.name,itemData.damage}
+		else
+			local w,h = term.getCursorPos()
+			term.clearLine()
+			term.setCursorPos(1,h)
 			print("    SKIPPING")
 			slots[block.blockID][blockData] = {}
 		end
@@ -477,9 +492,11 @@ function setup(filename)
 end
 
 function numberSelector()
+
     local function selectNext(newSelect)
         if newSelect >= 1 and newSelect <= 16 then
             turtle.select(newSelect)
+			show_selected_slot(newSelect)
         end
     end
  
@@ -622,6 +639,83 @@ function iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
 	return x,y,z
  end
 
+-- [[ TSP_algorithm API ]] --
+
+function calculateDistance(tNode1,tNode2)
+	local y1 = tNode1[2]
+	local z1 = tNode1[3]
+	local y2 = tNode2[2]
+	local z2 = tNode2[3]
+	return math.sqrt( (z2-z1)^2 + (y2-y1)^2 )
+	--return math.abs( (z2-z1) + (y2-y1) )
+end
+
+function twoOptSwap(route, i, k)
+	local new_route = {}
+	for c = 1,i-1 do
+		table.insert(new_route,route[c])
+	end
+	for c = k,i,-1 do
+		table.insert(new_route,route[c])
+	end
+	for c = k+1,#route do
+		table.insert(new_route,route[c])	
+	end
+	return new_route
+end
+
+function calculateTotalDistance(route)
+	local addString = "0 + "
+	for i = 1,#route-1 do
+		addString = addString..tostring(calculateDistance(route[i],route[i+1])).." + "
+	end
+	addString = addString.."0"
+	loadstring("total_distance = "..addString)()
+	return total_distance
+end
+
+function display(route,distance)
+	local l,h = term.getSize()
+	shell.run("clear")
+
+	for i = 1,#route-1 do
+		paintutils.drawLine(route[i][2],route[i][3],route[i+1][2],route[i+1][3],colors.lime)
+	end
+	for i,coord in pairs(route) do
+		term.setBackgroundColor(colors.yellow)
+		term.setTextColor(colors.magenta)
+		term.setCursorPos(coord[2],coord[3])
+		term.write(string.char(i+64))
+	end
+	term.setBackgroundColor(colors.black)
+	term.setTextColor(colors.white)
+	term.setCursorPos(1,h)
+	term.write(distance)
+end
+
+-- [[ Main File ]] --
+
+function tsp_algorithm(existing_route)
+	local improve = 0 
+	while improve < 20 do
+		local best_distance = calculateTotalDistance(existing_route)
+		for i = 1,#route-1 do
+			for k = i + 1, #route do
+				new_route = twoOptSwap(existing_route, i, k)
+				new_distance = calculateTotalDistance(new_route)
+				if new_distance < best_distance then
+					improve = 0
+					existing_route = new_route
+					best_distance = calculateTotalDistance(existing_route)
+					display(existing_route,best_distance)
+					sleep(.2)
+				end
+			end
+		end
+		improve = improve + 1
+	end
+	return best_distance, existing_route
+end
 
 -- [[ schematic --> blueprint ]] --
 
@@ -635,7 +729,6 @@ function iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
 function blueprint(startx,starty,startz,finalx,finaly,finalz)
 	--uses iterator to make instructions[n] table
 	local x,y,z = startx,starty,startz
-	local simx,simy,simz = startx,starty,startz
 	local instructions = {}
 	while true do
 		if x == "max" then
@@ -645,98 +738,66 @@ function blueprint(startx,starty,startz,finalx,finaly,finalz)
 		local data = getData(x,y,z)
 		if id > 0 then
 			table.insert(instructions,{x,y,z,id,data})
-			simx,simy,simz = addDistance(x,y,z,simx,simy,simz)
 		end
 		x,y,z = iterate(x,y,z,startx,starty,startz,finalx,finaly,finalz)
 	end
 	return instructions
 end
 
-function addDistance(x,y,z,simx,simy,simz)
-	--input x,y,z
-	--output running count
-end
+function blueprintTSP(startx,starty,startz,finalx,finaly,finalz)
+	local instructions = {}
+	local nodes = {}
+	local best_route = {}
 
-
-function createInstructions(startx,starty,startz,height,width,length,nTurtles,placeMode)
-
-	 local x,y,z = startx,starty,startz
-	 instructions = {}
-	 nTurtles = nTurtles or 1
-	 --startx,starty,startz = startx,starty,startz or 0,0,0
-	 placeMode = placeMode or "horizontal"
-	 local oTurtles = {}
-	
-	--if horizontal
-	for i = 1,nTurtles do
-		oTurtles[i] = {}
-		if i == tonumber(nTurtles) then
-			oTurtles[tonumber(nTurtles)].responsibleLength = math.floor(x/nTurtles) + (x - (math.floor(x/nTurtles)*nTurtles))
-		else
-			oTurtles[i].responsibleLength =  math.floor(x/nTurtles)
-		end
-		oTurtles[i].startHeight = startx
-		if i == 1 then
-			oTurtles[i].startWidth = starty
-		else
-			oTurtles[i].startWidth = oTurtles[i-1].startWidth + oTurtles[i].responsibleLength
-		end
-		oTurtles[i].startLength = startz
-		oTurtles[i].finalHeight = height-1
-		oTurtles[i].finalWidth = oTurtles[i].startWidth + oTurtles[i].responsibleLength - 1
-		oTurtles[i].finalLength = length-1
-		instructions[i] = {}
-	end
-	
-	
-
-		for i = 1,nTurtles do
-			x,y,z = startx,starty,startz
-			
-			
-			while true do
-				local n = #instructions[i]+1
-				instructions[i][n]={}
-				instructions[i][n].x,instructions[1][n].y,instructions[1][n].z = x,y,z
-				instructions[i][n].placeMode = placeMode
-				instructions[i][n].id = getBlockId(x,y,z)
-				instructions[i][n].data = getData(x,y,z)
-				x,y,z = iterate(x,y,z,
-					oTurtles[i].startHeight, oTurtles[i].startWidth, oTurtles[i].startLength,
-					oTurtles[i].finalHeight, oTurtles[i].finalWidth, oTurtles[i].finalLength
-				)
-				--attach methods here
+	local height,width,length = finalx,finaly,finalz
+	for x = 0,finalx do
+		nodes[x] = {}
+		for y = 0,finaly do
+			for z = 0,finalz do
+				local id = getBlockId(x,y,z)
+				local data = getData(x,y,z)
+				if id and id > 0 then
+					table.insert(nodes[x],{x,y,z})
+				end
 			end
-			
-			
 		end
-	return instructions
+	end
+	textutils.pagedPrint(textutils.serialize(nodes))	
+
+	--_,best_route = tsp_algorithm(nodes)
+	--for i,v in pairs(best_route[x]) do
+	--	table.insert(instructions,{x,v[1],v[2]})
+	--end
 end
 
+function Main()
+	setup(filename)
 
-setup(filename)
+	save("blocks",blocks)
+	save("data",data)
+	save("uniqueblocks",uniqueblocks)
 
-save("blocks",blocks)
-save("data",data)
-save("uniqueblocks",uniqueblocks)
+	local reference = {
+		startx = 0,
+		starty = 0,
+		startz = 0,
+		finalx = height-1,
+		finaly = width-1,
+		finalz = length-1,
+		height = height,
+		width = width,
+		length = length,
+		wrench = 16,
+		multiturtle = false -- otherwise its a number (1,2,4,8,12,etc),
+	}
 
-local reference = {
-	startx = 0,
-	starty = 0,
-	startz = 0,
-	finalx = height-1,
-	finaly = width-1,
-	finalz = length-1,
-	height = height,
-	width = width,
-	length = length,
-	wrench = 16,
-	multiturtle = false -- otherwise its a number (1,2,4,8,12,etc),
-}
+	local ins = blueprint(reference.startx,reference.starty,reference.startz,reference.finalx,reference.finaly,reference.finalz)
 
-local ins = blueprint(reference.startx,reference.starty,reference.startz,reference.finalx,reference.finaly,reference.finalz)
+	save("instructions",ins)
+	local fname = saveBlueprint(reference,slots,ins,uniqueblocks)
+	print(fname," saved")
+	--delete slots,reference,ins,uniqueblocks files
+end
 
-save("instructions",ins)
-local fname = saveBlueprint(reference,slots,ins,uniqueblocks)
-print(fname," saved")
---delete slots,reference,ins,uniqueblocks files
+--blueprintTSP(0,0,0,height,width,length)
+Main()
