@@ -1,0 +1,49 @@
+--upload to Market
+tArgs = {...}
+shell.run("clr")
+
+if #tArgs == 1 then
+	print("Usage = market upload [file]") 
+end
+
+if not fs.exists("Schematics") then
+	fs.makeDir("Schematics")
+end
+
+if not fs.exists("convert") then 
+	fs.open("convert","w").write(http.post("http://pastebin.com/raw/NUspW9KB").readAll())
+end
+
+local schematics = {
+
+	tent = "UskC5qpE",
+	chicken = "VisRJwkw",
+	star = "7im48RBP",
+	villageHouse = "FS0K4Zxe",
+	mobSpawner = "Cg6jgTqn",
+
+}
+
+if tArgs[1] == "upload" then
+	if fs.exists("sSchematic") then
+		fs.delete("sSchematic")
+	end
+	shell.run("convert toStringFile "..tArgs[2].." sSchematic") 
+	shell.run("pastebin put sSchematic")
+else
+	for i,v in pairs(schematics) do
+		local w = fs.open("Schematics/"..i,"w")
+		w.write([[
+			local schem = http.get("http://pastebin.com/raw/]]..v..[[").readAll()
+			local h = fs.open("temp","w")
+			h.write(schem)
+			h.close()
+			shell.run("convert toByteFile temp ]]..i..[[")
+			if fs.exists("temp") then
+				fs.delete("temp")
+			end
+		]])
+		w.close()
+	end
+	
+end
