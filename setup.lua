@@ -36,10 +36,10 @@ function get(name,address)
 end
 
 if tArgs[1] == "download" or tArgs[1] == "dl" then
-	get("market","BztihKh3")
-	get("turtle","7mnsWVwz")
-	get("blueprint","RZbvQfWG")
-	get("simulate","Th40FmCz")
+	get("market","https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/framework2/tools/schemMarket")
+	get("turtle","https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/framework2/apis/gps_api_reborn.lua")
+	get("blueprint","https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/framework2/schemMaker.lua")
+	get("simulate","https://raw.githubusercontent.com/GuitarMusashi616/SchematicTurtle/framework2/tools/turtle_simulate.lua")
 	shell.run("market")
 	return
 else
