@@ -1,9 +1,6 @@
 --made by me
 --setup() made by orwell
 
-local h2 = fs.open("readbytes","w")
-local h3 = fs.open("parse","w")
-
 local tArgs = { ... }
 if #tArgs ~= 1 then
   error("Usage: blueprint <gunzipped schematic file>")
@@ -369,7 +366,7 @@ function place()
   end
 end
 
-local function show_selected_slot(n)
+function show_selected_slot(n)
 	local w,h = term.getCursorPos()
 	local itemData = turtle.getItemDetail(newSelect)
 	if itemData then
