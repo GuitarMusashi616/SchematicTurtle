@@ -123,7 +123,7 @@ end
 
 function transferBlueprint(nTurtle)
 
-	--[[local v = startLocations[nTurtle]
+	local v = startLocations[nTurtle]
 	assert(v)
 	local ref = reference
 	assert(ref)
@@ -140,7 +140,7 @@ function transferBlueprint(nTurtle)
 		ins = improveBlueprint(ins,ref.startx,ref.starty,ref.startz,ref.finalx,ref.finaly,ref.finalz)
 	end
 	local fname = saveBlueprint(ref,slots,ins,uniqueblocks,nTurtle)
-	print(fname," saved")]]
+	print(fname," saved")
 
 	for i,v in pairs(fs.list(shell.dir())) do
 		if v:find("["..tostring(nTurtle).."]") then
