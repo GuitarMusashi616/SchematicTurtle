@@ -10,6 +10,11 @@ if not fs.exists("textutilsFIX") then
 	shell.run("pastebin get 3wguFBXn textutilsFIX")
 end
 
+if not fs.exists("grid") then
+	shell.run("pastebin get EjYUEQqx grid")
+end
+
+shell.run("grid")
 os.loadAPI("textutilsFIX")
 
 local filename = tArgs[1]
@@ -35,8 +40,11 @@ function saveIns(name,table)
 	h.close()
 end
 
-function saveBlueprint(reference,slots,instructions,uniqueblocks)
+function saveBlueprint(reference,slots,instructions,uniqueblocks,nTurtle)
 	local fname = filename:gsub("%.(.*)","")..".blueprint"
+	if nTurtle then
+		fname = fname.."["..tostring(nTurtle).."]"
+	end
 	local h = fs.open(fname,"w")
 	h.writeLine("reference ="..textutils.serialize(reference)..";")
 	h.writeLine("slots = "..textutils.serialize(slots)..";")
@@ -227,27 +235,24 @@ stairOrientation[5] = "West Inverted"
 stairOrientation[6] = "South Inverted"
 stairOrientation[7] = "North Inverted"
 
-local nonWoodenSlabs = {
-	[0] = "Stone",
-	[1] = "Sandstone",
-	[2] = "Wooden",
-	[3] = "Cobblestone",
-	[4] = "Bricks",
-	[5] = "Stone Bricks",
-	[6] = "Nether Brick",
-	[7] = "Quartz",
-	[8] = "Inverted Stone",
-	[9] = "Inverted Sandstone",
-	[10] = "Inverted Wooden",
-	[11] = "Inverted Cobblestone",
-	[12] = "Inverted Bricks",
-	[13] = "Inverted Stone Bricks",
-	[14] = "Inverted Nether Brick",
-	[15] = "Inverted Quartz",
+local nonWoodenSlabs = {		
+	[0] = "Stone",		
+	[1] = "Sandstone",		
+	[2] = "Wooden",		
+	[3] = "Cobblestone",		
+	[4] = "Bricks",		
+	[5] = "Stone Bricks",		
+	[6] = "Nether Brick",		
+	[7] = "Quartz",		
+	[8] = "Inverted Stone",		
+	[9] = "Inverted Sandstone",		
+	[10] = "Inverted Wooden",		
+	[11] = "Inverted Cobblestone",		
+	[12] = "Inverted Bricks",		
+	[13] = "Inverted Stone Bricks",		
+	[14] = "Inverted Nether Brick",		
+	[15] = "Inverted Quartz",		
 }
-
-
-
 
 local length = 0
 local height = 0
@@ -256,25 +261,25 @@ local blocks = {}
 local data = {}
 
 function getBlockName(id, blockData)
-  blockData = blockData or nil
-  local str = nil
-  if(block_id[id] == nil) then
-    return tostring(id)..", "..tostring(blockData)
-  else
-    if(blockData) then
-      if(id == 35) or (id == 159) or (id == 95) or (id == 160) or (id == 171) then
-        str = tostring(woolColors[blockData]) .. " " .. tostring(block_id[id])
-        return str
-      elseif id == 5 or id==17 or id==126 then
-		str = tostring(woodTypes[blockData]).." "..tostring(block_id[id])
-		return str
-      elseif id == 44 or id == 43 then
-		str = tostring(nonWoodenSlabs[blockData]).." "..tostring(block_id[id])
-		return str
-	  end
-    end
-    return block_id[id]
-  end
+	blockData = blockData or nil
+	local str = nil
+	if(block_id[id] == nil) then
+		return tostring(id)..", "..tostring(blockData)
+	else
+		if(blockData) then
+			if(id == 35) or (id == 159) or (id == 95) or (id == 160) or (id == 171) then
+				str = tostring(woolColors[blockData]) .. " " .. tostring(block_id[id])
+				return str
+			elseif id == 5 or id==17 or id==126 then
+				str = tostring(woodTypes[blockData]).." "..tostring(block_id[id])
+				return str
+			elseif id == 44 or id == 43 then		
+				str = tostring(nonWoodenSlabs[blockData]).." "..tostring(block_id[id])		
+				return str
+			end
+		return block_id[id]
+		end
+	end
 end
 
 function getBlockId(x,y,z)
@@ -403,12 +408,6 @@ function place()
   end
 end
 
-local function setColor(color)
-	if term.isColor() then
-		term.setTextColor(color)
-	end
-end
-
 local function show_selected_slot(n)
 	local w,h = term.getCursorPos()
 	local itemData = turtle.getItemDetail(newSelect)
@@ -424,6 +423,12 @@ local function show_selected_slot(n)
 	return itemData
 end
 
+local function setColor(color)		
+	if term.isColor() then		
+		term.setTextColor(color)		
+	end		
+end
+	
 function setup(filename)
 --input file
 --returns blocks,data
@@ -483,23 +488,26 @@ function setup(filename)
   		if (i%9)==0 then
     		read()
   		end
-		local stacks = math.ceil( (v.amount/64) )
-		setColor(colors.white)
-		write(" -" .. getBlockName(v.blockID, v.data))
-		setColor(colors.lightGray)
-		write("("..v.blockID..","..v.data..")")
-		setColor(colors.white)
-		write(": ")
 
-		if v.amount > 64 then
-			setColor(colors.magenta)
-  			print(stacks.." stacks")
-		else
-			setColor(colors.cyan)
-			print(v.amount)
-		end
-	end
-	setColor(colors.white)
+	    local stacks = math.ceil( (v.amount/64) )
+        setColor(colors.white)
+        write(" -" .. getBlockName(v.blockID, v.data))
+        setColor(colors.lightGray)
+        write("("..v.blockID..","..v.data..")")
+        setColor(colors.white)
+        write(": ")
+ 
+        if v.amount > 64 then
+            setColor(colors.magenta)
+            print(stacks.." stacks")
+        else
+            setColor(colors.cyan)
+            print(v.amount)
+        end
+    end
+	
+    setColor(colors.white)
+
 	read()
 
 	print("Use arrowKeys and enter to select slots containing which block the turtle will use for the specified blockType")
@@ -510,7 +518,7 @@ function setup(filename)
 		local n = nil
   		blockData = block.data
 		setColor(colors.green)
-  		print(" -in which slots is " .. getBlockName(block.blockID, blockData).."("..block.blockID..","..blockData .. ") ?")
+  		print(" -in which slots is " .. getBlockName(block.blockID, blockData).."("..block.blockID..", "..blockData .. ") ?")
 		setColor(colors.white)
   		if not slots[block.blockID] then
     		slots[block.blockID] = {}
@@ -751,8 +759,17 @@ local function display(route,distance)
     for i,coord in pairs(route) do
         term.setBackgroundColor(colors.yellow)
         term.setTextColor(colors.magenta)
-        term.setCursorPos(coord[2],coord[3])
-        term.write(string.char(i+64))
+		if coord[2] < l and coord[2] >= 1 and coord[3] >= 1 and coord[3] < h then
+        	term.setCursorPos(coord[2],coord[3])
+			local char = i + 64
+			if char > 190 then
+				char = char - 190
+			end
+			if char > 380 then 
+				char = char - 380
+			end
+        	term.write(string.char(char))
+		end
     end
     term.setBackgroundColor(colors.black)
     term.setTextColor(colors.white)
@@ -870,6 +887,7 @@ function improveBlueprint(instructions,startx,starty,startz,finalx,finaly,finalz
 end
 
 function simulateIns(instructions)
+	local w,h = term.getSize()
     local lastx = 0
     shell.run("clr")
     for n = 1,#instructions do
@@ -877,9 +895,11 @@ function simulateIns(instructions)
             term.setBackgroundColor(colors.black)
             shell.run("clr")
         end
-        term.setCursorPos(instructions[n][2]+1,instructions[n][3]+1)
-        term.setBackgroundColor(2^instructions[n][5])
-        term.write(" ")
+		if instructions[n][2]+1 >= 1 and instructions[n][3]+1 >= 1 and instructions[n][2]+1 < w and instructions[n][3]+1 <  h then
+        	term.setCursorPos(instructions[n][2]+1,instructions[n][3]+1)
+        	term.setBackgroundColor(2^instructions[n][5])
+        	term.write(" ")
+		end
         lastx = instructions[n][1]
         sleep(0)
     end
@@ -903,6 +923,7 @@ function orientation_check(reference,slots)
 							term.setTextColor(colors.yellow)
 						end
 						r = read()
+						r = tostring(r):lower()
 						term.setTextColor(colors.white)
 						if r ~= "south" and r~= "north" and r~= "west" and r~= "east" then
 							print(r.. " not recognized, north/south/east/west?")
@@ -922,6 +943,21 @@ function orientation_check(reference,slots)
 	return reference
 end
 
+function multiturtle_check(reference)
+	write("How many Turtles?: ")
+	local n = read()
+	n = tonumber(n)
+	if n then
+		if n == 1 then
+			reference.multiturtle = false
+		else
+			reference.multiturtle = n
+		end
+	end
+	print()
+	return reference
+end
+
 local function Main()
 	setup(filename)
 
@@ -929,7 +965,7 @@ local function Main()
 	--save("data",data)
 	--save("uniqueblocks",uniqueblocks)
 
-	local reference = {
+	reference = {
 		startx = 0,
 		starty = 0,
 		startz = 0,
@@ -944,6 +980,9 @@ local function Main()
 		relativeDirection = "south",
 		numChests = false,
 		filename = false,
+		returnx = 0,
+		returny = 0,
+		returnz = -1,
 	}
 	
 	if not slots then
@@ -951,17 +990,39 @@ local function Main()
 	end
 
 	reference = orientation_check(reference,slots)
-
-	local ins = blueprint(reference.startx,reference.starty,reference.startz,reference.finalx,reference.finaly,reference.finalz)
-	if tArgs[2] == "tsp" then
-		ins = improveBlueprint(ins,reference.startx,reference.starty,reference.startz,reference.finalx,reference.finaly,reference.finalz)
-	end
+	reference = multiturtle_check(reference)
 	
+	local instructions = blueprint(reference.startx,reference.starty,reference.startz,reference.finalx,reference.finaly,reference.finalz)
+	if reference.multiturtle then
+		local A1 = Class_Grid(instructions,reference.starty,reference.startz,reference.finaly,reference.finalz)
+		local startLocations = {nTurtleSplit(reference.multiturtle,A1)}
+		for i,v in pairs(startLocations) do
+			local nTurtle = i
+			local ref = reference
+			ref.starty = v.starty
+			ref.startz = v.startz
+			ref.finaly = v.finaly
+			ref.finalz = v.finalz
+			local ins = blueprint(ref.startx,v.starty,v.startz,ref.finalx,v.finaly,v.finalz)
+			if tArgs[2] == "tsp" then
+				ins = improveBlueprint(ins,ref.startx,ref.starty,ref.startz,ref.finalx,ref.finaly,ref.finalz)
+			end
+			
+			local fname = saveBlueprint(ref,slots,ins,uniqueblocks,nTurtle)
+			print(ref.starty," ",ref.startz," ",ref.finaly," ",ref.finalz)
+			print(fname," saved")
+		end
+	else
+		
+		if tArgs[2] == "tsp" then
+			instructions = improveBlueprint(instructions,reference.startx,reference.starty,reference.startz,reference.finalx,reference.finaly,reference.finalz)
+		end
 	--textutils.pagedPrint(textutils.serialize(ins))
 	--saveIns("instructions",ins)
-	local fname = saveBlueprint(reference,slots,ins,uniqueblocks)
-	print(fname," saved")
+		local fname = saveBlueprint(reference,slots,instructions,uniqueblocks)
+		print(fname," saved")
 	--delete slots,reference,ins,uniqueblocks files
+	end
 end
 
 Main()
